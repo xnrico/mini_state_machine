@@ -1,5 +1,8 @@
 # Prerequisites
 *.d
+.vscode/
+build/
+.clang-format
 
 # Compiled Object files
 *.slo
