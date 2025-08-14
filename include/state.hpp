@@ -19,8 +19,8 @@ class msm_state {
 
  public:
   using ptr = std::shared_ptr<msm_state>;
-  msm_state(const std::unordered_set<std::string>& outcomes_) : active{false}, cancelled{false}, outcomes{outcomes_} {}
-  msm_state() : msm_state(std::unordered_set<std::string>{}) {}
+  msm_state(const std::unordered_set<std::string>& outcomes_);
+  msm_state() = delete;
   virtual ~msm_state() = default;
 
   auto operator()(blackboard::ptr bb) -> std::string;
@@ -42,8 +42,7 @@ class callback_state : public msm_state {
   callback_state(const std::function<std::string(blackboard::ptr)>& func,
                  const std::unordered_set<std::string>& outcomes_)
       : msm_state(outcomes_), callback_func{func} {}
-  callback_state(const std::function<std::string(blackboard::ptr)>& func)
-      : msm_state(std::unordered_set<std::string>{}), callback_func{func} {}
+  callback_state() = delete;
   ~callback_state() override = default;
 
   auto execute(blackboard::ptr bb) -> std::string override;
@@ -76,6 +75,8 @@ class parallel_state : public msm_state {
  public:
   parallel_state(const std::unordered_set<msm_state::ptr>& states_, const std::string& default_outcome_,
                  const std::unordered_map<std::string, state_map>& outcome_map_);
+  parallel_state() = delete;
+  ~parallel_state() override = default;
 
   auto execute(blackboard::ptr bb) -> std::string override;
   auto cancel() -> void override;

@@ -4,6 +4,14 @@
 #include <stdexcept>
 
 namespace msm {
+
+msm_state::msm_state(const std::unordered_set<std::string>& outcomes_)
+    : active{false}, cancelled{false}, outcomes{outcomes_} {
+  if (outcomes.empty()) {
+    throw std::logic_error("State must have at least one outcome.");
+  }
+}
+
 auto msm_state::operator()(blackboard::ptr bb) -> std::string {
   cancelled.store(false);
   active.store(true);

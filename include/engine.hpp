@@ -36,7 +36,7 @@ class msm_engine : public msm_state {
 
  public:
   msm_engine(const std::unordered_set<std::string>& outcomes);
-  msm_engine();
+  msm_engine() = delete;
   ~msm_engine() override = default;
 
   auto add_state(const std::string& name, msm_state::ptr state,
